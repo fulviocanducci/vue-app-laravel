@@ -1,0 +1,25 @@
+{
+  "id": "1knbrw8se",
+  "question": "Questão",
+  "items": [
+    {
+      "id": "1knbsjdww",
+      "name": "Question 1",
+      "type": 1,
+      "status": true,
+      "answers": [
+        {
+          "id": "1knbsjf6o",
+          "text": "Sim",
+          "status": true
+        },
+        {
+          "id": "1knbsjfxc",
+          "text": "Não",
+          "status": true
+        }
+      ]
+    }
+  ],
+  "status": true
+}

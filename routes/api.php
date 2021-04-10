@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\FormsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::group([], function () {
+    Route::get('form', [FormsController::class, "index"])->name('forms.index');
+    Route::post('form', [FormsController::class, "create"])->name('forms.create');
+    Route::get('form/{id}', [FormsController::class, "show"])->name('forms.show')->whereNumber('id');
+    Route::put('form/{id}', [FormsController::class, "edit"])->name('forms.edit')->whereNumber('id');
+    Route::delete('form/{id}', [FormsController::class, "delete"])->name('forms.delete')->whereNumber('id');
 });
