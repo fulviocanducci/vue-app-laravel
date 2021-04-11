@@ -76,23 +76,25 @@ class FormsController extends Controller
                     } else {
                         $formItem = $form->items()->create($dataItem);
                     }
-                    foreach ($item['answers'] as $asnwer) {
-                        if (!((bool)$asnwer['status'])) {
-                            $formItemsAnswers = $formItem->answers()->where('id', $asnwer['id'])->first();
-                            if ($formItemsAnswers) {
-                                $formItemsAnswers->delete();
-                            }
-                        } else {
-                            $dataAnswers = [
-                                'text' => $asnwer['text'],
-                                'status' => $asnwer['status']
-                            ];
-                            $formItemsAnswers = $formItem->answers()->where('id', $asnwer['id'])->first();
-                            if ($formItemsAnswers) {
-                                $formItemsAnswers->fill($dataAnswers);
-                                $formItemsAnswers->save();
+                    if ($formItem) {
+                        foreach ($item['answers'] as $asnwer) {
+                            if (!((bool)$asnwer['status'])) {
+                                $formItemsAnswers = $formItem->answers()->where('id', $asnwer['id'])->first();
+                                if ($formItemsAnswers) {
+                                    $formItemsAnswers->delete();
+                                }
                             } else {
-                                $formItem->answers()->create($dataAnswers);
+                                $dataAnswers = [
+                                    'text' => $asnwer['text'],
+                                    'status' => $asnwer['status']
+                                ];
+                                $formItemsAnswers = $formItem->answers()->where('id', $asnwer['id'])->first();
+                                if ($formItemsAnswers) {
+                                    $formItemsAnswers->fill($dataAnswers);
+                                    $formItemsAnswers->save();
+                                } else {
+                                    $formItem->answers()->create($dataAnswers);
+                                }
                             }
                         }
                     }
@@ -111,6 +113,13 @@ class FormsController extends Controller
 
     public function delete($id)
     {
-        return $id;
+        $form = $this->form->find($id);
+        if ($form) {
+            $form->items()->answers()->delete();
+            $form->items()->delete();
+            $form->delete();
+            return response()->json([['Deleted' => 'Ok']], 200);
+        }
+        return response()->json([['Deleted' => 'Not Found']], 404);
     }
 }
