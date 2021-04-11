@@ -15,6 +15,7 @@ class CreateFormsTable extends Migration
             $table->boolean('status');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

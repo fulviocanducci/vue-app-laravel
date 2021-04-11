@@ -18,6 +18,7 @@ class CreateAnswersTable extends Migration
             $table->foreign('item_id')->references('id')->on('items');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -19,6 +19,7 @@ class CreateItemsTable extends Migration
             $table->foreign('form_id')->references('id')->on('forms');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
